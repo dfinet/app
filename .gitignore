@@ -1,0 +1,8 @@
+# MacOS
+.DS_Store
+
+.htaccess
+
+# composer 関連ファイル
+composer.lock
+/vendor/
