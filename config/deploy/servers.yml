@@ -1,0 +1,13 @@
+ap01:
+  host: 150.95.217.235
+  user: deploy
+  identity_file:
+      password: "deploy"
+  stage: prod
+  deploy_path: /var/www/app
+stg:
+  host: 133.130.102.21
+  user: deploy
+  password: "deploy"
+  stage: stg
+  deploy_path: /var/www/app
