@@ -1,38 +1,35 @@
 <?php
-/*
- * This file has been generated automatically.
- * Please change the configuration for correct use deploy.
- */
-
+namespace Deployer;
+require 'recipe/common.php';
 require 'recipe/composer.php';
-
-// Set configurations
-set('repository', 'git@domain.com:username/repository.git');
+// php5 setting
+set('ssh_type', 'native');
+set('ssh_multiplexing', true);
+// Configuration
+set('branch', 'master');
+set('repository', 'git@github.com:dfinet/app.git');
 set('shared_files', []);
 set('shared_dirs', []);
 set('writable_dirs', []);
-
-// Configure servers
-server('production', 'prod.domain.com')
-    ->user('username')
-    ->password()
-    ->env('deploy_path', '/var/www/prod.domain.com');
-
-server('beta', 'beta.domain.com')
-    ->user('username')
-    ->password()
-    ->env('deploy_path', '/var/www/beta.domain.com');
-
-/**
- * Restart php-fpm on success deploy.
- */
-task('php-fpm:restart', function () {
-    // Attention: The user must have rights for restart service
-    // Attention: the command "sudo /bin/systemctl restart php-fpm.service" used only on CentOS system
-    // /etc/sudoers: username ALL=NOPASSWD:/bin/systemctl restart php-fpm.service
-    run('sudo /bin/systemctl restart php-fpm.service');
-})->desc('Restart PHP-FPM service');
-
-after('success', 'php-fpm:restart');
-
-after('deploy:update_code', 'deploy:shared');
+set('copy_dirs', []);
+// Servers
+serverList('config/deploy/servers.yml');
+// ==============================
+//     Deploy
+// ==============================
+desc('Deploy your project');
+task('deploy', [
+    'deploy:prepare',
+    'deploy:lock',
+    'deploy:release',
+    'deploy:update_code',
+    'deploy:shared',
+    'deploy:writable',
+    'deploy:copy_dirs',
+    'deploy:vendors',
+    'deploy:clear_paths',
+    'deploy:symlink',
+    'deploy:unlock',
+    'cleanup',
+]);
+after('deploy', 'success');
