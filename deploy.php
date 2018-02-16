@@ -8,16 +8,16 @@ set('ssh_multiplexing', true);
 // Configuration
 set('branch', 'master');
 set('repository', 'git@github.com:dfinet/app.git');
-set('shared_files', []);
+set('shared_files', ['wp-content/uploads', 'wp-content/cache', 'wp-content/plugins']);
 set('shared_dirs', []);
 set('writable_dirs', []);
 set('copy_dirs', []);
 // Servers
 serverList('config/deploy/servers.yml');
+
 // ==============================
 //     Deploy
 // ==============================
-desc('Deploy your project');
 task('deploy', [
     'deploy:prepare',
     'deploy:lock',

@@ -6,8 +6,11 @@ ap01:
   stage: prod
   deploy_path: /var/www/app
 stg:
-  host: 133.130.102.21
-  user: deploy
-  password: "deploy"
-  stage: stg
-  deploy_path: /var/www/app
+    host:          133.130.102.21
+    user:          deploy
+    identity_file:
+        public_key: "~/.ssh/id_rsa.pub"
+        private_key: "~/.ssh/id_rsa"
+    stage:         stg
+    deploy_path:   "/var/www/app"
+    branch:        master
